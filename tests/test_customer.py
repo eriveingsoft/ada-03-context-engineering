@@ -15,3 +15,16 @@ def test_invalid_email_is_rejected():
         assert False 
     except ValueError as exc: 
         assert str(exc) == "invalid-email" 
+ 
+def test_update_customer_email_strips_whitespace(): 
+    customer = Customer(10, "Ana", "ana@example.com", "admin", "admin") 
+    updated = update_customer_email(customer, "  user@example.com  ", "agent") 
+    assert updated.email == "user@example.com" 
+ 
+def test_non_string_email_is_rejected(): 
+    customer = Customer(10, "Ana", "ana@example.com", "admin", "admin") 
+    try: 
+        update_customer_email(customer, None, "agent") 
+        assert False 
+    except ValueError as exc: 
+        assert str(exc) == "invalid-email" 
